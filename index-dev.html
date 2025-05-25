@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Click Defense - Tower Clicker Game</title>
+<link rel="stylesheet" href="styles/main.css">
+<style>
+  /* Game-specific styles */
+  #game-arena {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+    height: 80vh;
+    max-height: 600px;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1), rgba(0,0,0,0.3));
+    border: 3px solid #444;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  #tower {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    cursor: crosshair;
+    z-index: 100;
+    transition: none;
+  }
+  
+  #tower.shooting {
+    filter: brightness(1.5);
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  
+  .enemy {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff4444, #aa0000);
+    border: 2px solid #660000;
+    transition: none;
+    z-index: 50;
+  }
+  
+  .enemy.hit {
+    animation: enemyHit 0.2s ease-out;
+  }
+  
+  @keyframes enemyHit {
+    0% { transform: scale(1); filter: brightness(2); }
+    100% { transform: scale(1.2); filter: brightness(1); }
+  }
+  
+  .projectile {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #ffff00, #ff6600);
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffaa00;
+    z-index: 75;
+    pointer-events: none;
+  }
+  
+  .damage-number {
+    position: absolute;
+    color: #ffff00;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    pointer-events: none;
+    z-index: 200;
+    animation: damageFloat 1s ease-out forwards;
+  }
+  
+  @keyframes damageFloat {
+    0% { 
+      opacity: 1; 
+      transform: translateY(0) scale(1);
+    }
+    100% { 
+      opacity: 0; 
+      transform: translateY(-50px) scale(0.8);
+    }
+  }
+  
+  .coin-drop {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    z-index: 60;
+    cursor: pointer;
+    animation: coinBounce 0.5s ease-out;
+  }
+  
+  @keyframes coinBounce {
+    0% { transform: translateY(0) scale(0); }
+    50% { transform: translateY(-20px) scale(1.2); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  
+  #wave-display {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 300;
+  }
+  
+  #game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+    z-index: 500;
+  }
+</style>
+</head>
+<body>
+
+<div id="game-container">
+  <div id="wave-display">Wave: <span id="wave-number">1</span></div>
+  
+  <div id="currency">
+    <span id="coin-icon">🪙</span> <span id="money-text">0</span>
+  </div>
+  
+  <div id="stats-display">
+    <div>Damage: <span id="damage-stat">1</span></div>
+    <div>Fire Rate: <span id="firerate-stat">1</span>/s</div>
+    <div>Range: <span id="range-stat">150</span>px</div>
+  </div>
+  
+  <div id="game-arena">
+    <img src="tower.png" id="tower" alt="Defense Tower" />
+    <!-- Enemies, projectiles, and coins spawn here -->
+  </div>
+  
+  <div id="game-over">
+    <h2>GAME OVER!</h2>
+    <p>You survived <span id="waves-survived">0</span> waves!</p>
+    <p>Coins earned: <span id="coins-earned">0</span></p>
+    <button onclick="game.restart()">Try Again</button>
+  </div>
+</div>
+
+<!-- Upgrade Panel -->
+<div id="upgrade-panel" class="upgrade-panel">
+  <div class="panel-header">
+    <button class="tab-btn active" data-tab="tower">🗼 Tower</button>
+    <button class="tab-btn" data-tab="abilities">⚡ Abilities</button>
+  </div>
+  
+  <div class="upgrade-container active" id="tower-upgrades">
+    <!-- Tower upgrades will be added here -->
+  </div>
+  <div class="upgrade-container" id="abilities-upgrades">
+    <!-- Ability upgrades will be added here -->
+  </div>
+</div>
+
+<div id="notifications"></div>
+
+<div class="controls">
+  <button class="control-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+  <button class="control-btn" id="pause-btn" title="Pause Game">⏸️</button>
+  <button class="control-btn" onclick="game.restart()" title="Restart">🔄</button>
+</div>
+
+<script type="module" src="src/core/TowerDefenseGame.js"></script>
+</body>
+</html>

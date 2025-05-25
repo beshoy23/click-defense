@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Defense - Isometric Tower Defense</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a2e;
+            font-family: Arial, sans-serif;
+        }
+        
+        #game-container {
+            border: 2px solid #0f3460;
+            box-shadow: 0 0 20px rgba(94, 84, 142, 0.5);
+        }
+        
+        #ui-overlay {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            z-index: 1000;
+        }
+        
+        .stat-display {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <div id="ui-overlay">
+        <div class="stat-display">
+            <div>Wave: <span id="wave">1</span></div>
+            <div>Gold: <span id="gold">100</span></div>
+            <div>Lives: <span id="lives">20</span></div>
+        </div>
+    </div>
+    
+    <script type="module" src="./src/phaser-game/main.js"></script>
+</body>
+</html>

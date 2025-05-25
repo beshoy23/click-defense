@@ -1,0 +1,17 @@
+{
+  "name": "arabtalian-clicker-game",
+  "version": "1.0.0",
+  "description": "A modular clicker game with Arabtalian brainrot theme",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "python3 -m http.server 8000",
+    "dev": "echo 'Open index-dev.html in a browser with local server running'"
+  },
+  "keywords": ["game", "clicker", "incremental"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^3.70.0"
+  }
+}
