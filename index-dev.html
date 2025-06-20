@@ -132,6 +132,22 @@
     display: none;
     z-index: 500;
   }
+
+  /* Mobile tweaks */
+  @media (max-width: 600px) {
+    #game-arena {
+      width: 95vw;
+      height: 70vh;
+      max-width: none;
+      max-height: none;
+      touch-action: manipulation;
+    }
+
+    #tower {
+      width: 60px;
+      height: 60px;
+    }
+  }
 </style>
 </head>
 <body>

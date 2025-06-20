@@ -5,9 +5,13 @@ import { PreloadScene } from './scenes/PreloadScene.js';
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
-    width: 1024,
-    height: 768,
     backgroundColor: '#2d2d2d',
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: window.innerWidth,
+        height: window.innerHeight
+    },
     scene: [PreloadScene, GameScene],
     physics: {
         default: 'arcade',
@@ -21,3 +25,7 @@ const game = new Phaser.Game(config);
 
 // Make game instance globally available for debugging
 window.game = game;
+
+window.addEventListener('resize', () => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+});
