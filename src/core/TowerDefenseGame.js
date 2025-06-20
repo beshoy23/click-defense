@@ -53,14 +53,22 @@ export class TowerDefenseGame {
   setupEventListeners() {
     // Click to shoot
     const arena = document.getElementById('game-arena');
+    const shootHandler = (x, y) => {
+      const rect = arena.getBoundingClientRect();
+      const clickX = x - rect.left;
+      const clickY = y - rect.top;
+      this.tower.handleClick(clickX, clickY);
+    };
+
     arena.addEventListener('click', (e) => {
       if (!this.isPlaying || this.isPaused) return;
-      
-      const rect = arena.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-      
-      this.tower.handleClick(clickX, clickY);
+      shootHandler(e.clientX, e.clientY);
+    });
+
+    arena.addEventListener('touchstart', (e) => {
+      if (!this.isPlaying || this.isPaused) return;
+      const touch = e.touches[0];
+      shootHandler(touch.clientX, touch.clientY);
     });
     
     // Keyboard controls
