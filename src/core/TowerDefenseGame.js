@@ -1,4 +1,4 @@
-import { GAME_CONFIG, ENEMY_TYPES } from '../config/gameConfig.js';
+import { GAME_CONFIG, ENEMY_TYPES, EFFECTS } from '../config/gameConfig.js';
 import { Tower } from './Tower.js';
 import { Enemy } from './Enemy.js';
 import { AudioManager } from '../managers/AudioManager.js';
@@ -272,7 +272,7 @@ export class TowerDefenseGame {
         coin.style.opacity = '0';
         setTimeout(() => coin.remove(), 500);
       }
-    }, GAME_CONFIG.COIN_LIFETIME);
+    }, EFFECTS.COIN_LIFETIME);
   }
   
   collectCoin(value) {
